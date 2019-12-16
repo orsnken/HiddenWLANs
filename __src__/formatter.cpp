@@ -23,7 +23,7 @@ int run(const std::string& path, int dd) {
   using namespace std;
 
   const string prefix = path + "/D" + to_string(dd);
-  const string filename_output_th = prefix + "_thrpughput.csv";
+  const string filename_output_th = prefix + "_throughput.csv";
   const string filename_output_fi = prefix + "_fairness.csv";
 
   ofstream ofs_th(filename_output_th);
@@ -35,7 +35,12 @@ int run(const std::string& path, int dd) {
     return 1;
   }
 
+  ofs_th << "distance,-100,-90,-80,-70,-60,-50,-40,-30,-20,-10,0,10,20,30,40,50,60,70,80,90,100," << endl;
+  ofs_fi << "distance,-100,-90,-80,-70,-60,-50,-40,-30,-20,-10,0,10,20,30,40,50,60,70,80,90,100," << endl;
+
   for (int y = -100; y <= 100; y += 10) {
+    ofs_th << y << ",";
+    ofs_fi << y << ",";
     for (int x = -100; x <= 100; x += 10) {
       // ----
       // open the input file. [FORMAT: Dxx_Xxx_Yxx.csv]
