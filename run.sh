@@ -1,7 +1,7 @@
 #!/bin/bash
 
-export PATH="/home/ken/App/ns-3.29/source/ns-3.29:$PATH"
-# export PATH="/home/hiroshima-lenovo/App/ns3/source/ns-3.29:$PATH"
+# export PATH="/home/ken/App/ns-3.29/source/ns-3.29:$PATH"
+export PATH="/home/hiroshima-lenovo/App/ns3/source/ns-3.29:$PATH"
 
 waf
 
@@ -17,12 +17,12 @@ echo "Begin simulation ///"
 pwd
 
 sim_time=3
-distance_disturbers=100
+distance_disturbers=50
 
 for y in -100 -90 -80 -70 -60 -50 -40 -30 -20 -10 0 10 20 30 40 50 60 70 80 90 100
 do
   echo "---------------------------"
-  for i in `seq 5`
+  for i in `seq 1`
   do
     for x in -100 -90 -80 -70 -60 -50
     do

@@ -19,7 +19,7 @@ std::vector<std::string> split(const std::string& s, char delim) {
   return elems;
 }
 
-int run(const std::string& path, int dd) {
+int run(const std::string& path, int dd, int sr_min, int sr_max, int dlt) {
   using namespace std;
 
   const string prefix = path + "/D" + to_string(dd);
@@ -35,13 +35,19 @@ int run(const std::string& path, int dd) {
     return 1;
   }
 
-  ofs_th << "distance,-100,-90,-80,-70,-60,-50,-40,-30,-20,-10,0,10,20,30,40,50,60,70,80,90,100," << endl;
-  ofs_fi << "distance,-100,-90,-80,-70,-60,-50,-40,-30,-20,-10,0,10,20,30,40,50,60,70,80,90,100," << endl;
+  ofs_th << "distance,";
+  ofs_fi << "distance,";
+  for (int x = sr_min; x <= sr_max; x += dlt) {
+    ofs_th << x << ",";
+    ofs_fi << x << ",";
+  }
+  ofs_th << endl;
+  ofs_fi << endl;
 
-  for (int y = -100; y <= 100; y += 10) {
+  for (int y = sr_min; y <= sr_max; y += dlt) {
     ofs_th << y << ",";
     ofs_fi << y << ",";
-    for (int x = -100; x <= 100; x += 10) {
+    for (int x = sr_min; x <= sr_max; x += dlt) {
       // ----
       // open the input file. [FORMAT: Dxx_Xxx_Yxx.csv]
       const string filename_input = prefix + "_X" + to_string(x) + "_Y" + to_string(y) + ".csv";
@@ -83,16 +89,20 @@ int run(const std::string& path, int dd) {
 
 int main(int argc, char* argv[]) {
   using namespace std;
-  if (argc < 3) {
-    cout << "[Error] a few arguments. -> program [path<maybe dir-name including source files>][distance-distrurbers<int>]" << endl;
+  if (argc < 6) {
+    cout << "[Error] a few arguments. -> program [path<maybe dir-name including source files>][distance-distrurbers<int>]"
+      << "[search-range-min<int>][search-range-max<int>][stride<int>]" << endl;
     exit(-1);
   } else {
     int dd = atoi(argv[2]);
+    int sr_min = atoi(argv[3]);
+    int sr_max = atoi(argv[4]);
+    int dlt = atoi(argv[5]);
     if (dd <= 0) {
       cout << "[Error] the distance must be a positive integer value." << endl;
       exit(-1);
     }
-    run(string(argv[1]), dd);
+    run(string(argv[1]), dd, sr_min, sr_max, dlt);
   }
   return 0;
 }
