@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# export PATH="/home/ken/App/ns-3.29/source/ns-3.29:$PATH"
-export PATH="/home/hiroshima-lenovo/App/ns3/source/ns-3.29:$PATH"
+export PATH="/home/ken/App/ns-3.29/source/ns-3.29:$PATH"
+# export PATH="/home/hiroshima-lenovo/App/ns3/source/ns-3.29:$PATH"
 
 waf
 
