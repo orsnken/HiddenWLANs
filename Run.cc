@@ -218,6 +218,27 @@ void InitNetwork() {
 
   ApplicationContainer app;
 
+  // True Triangle
+  // for (int i = 1; i <= 3; i++) {
+  //   Ptr<Domain> network_disturber = Create<Domain>("Network_Distuber_" + std::to_string(i), "192.168.20" + std::to_string(i) + ".0", "255.255.255.0", 1);
+  //   network_disturber->Construct(
+  //     gWifiCeHelperDisturber,
+  //     gWifiPhyHelper,
+  //     "ns3::ApWifiMac",
+  //     mac_ap,
+  //     "ns3::StaWifiMac",
+  //     mac_sta
+  //   );
+  //   double r_disturbers_metre = gDistanceDisturbersMetre / 1.7320508;
+  //   double th = 3.141592 * 2.0 / 3.0 * i;
+  //   network_disturber->ConfigureMobility(
+  //     Vector3D(r_disturbers_metre * sin(th), r_disturbers_metre * cos(th), 0.0), gDistanceTerminalsMetre
+  //   );
+  //   gDomains.push_back(network_disturber);
+  //   app.Add(SetApplication(*network_disturber, 5000));
+  // }
+
+  // E-Triangle
   for (int i = 1; i <= 3; i++) {
     Ptr<Domain> network_disturber = Create<Domain>("Network_Distuber_" + std::to_string(i), "192.168.20" + std::to_string(i) + ".0", "255.255.255.0", 1);
     network_disturber->Construct(
@@ -228,11 +249,18 @@ void InitNetwork() {
       "ns3::StaWifiMac",
       mac_sta
     );
-    double r_disturbers_metre = gDistanceDisturbersMetre / 1.7320508;
-    double th = 3.141592 * 2.0 / 3.0 * i;
-    network_disturber->ConfigureMobility(
-      Vector3D(r_disturbers_metre * sin(th), r_disturbers_metre * cos(th), 0.0), gDistanceTerminalsMetre
-    );
+    double x = 0.0, y = 0.0;
+    if (i == 1) {
+      x = gDistanceDisturbersMetre / 4.0;
+      y = -gDistanceDisturbersMetre * 1.7320508 / 4.0;
+    } else if (i == 2) {
+      x = -gDistanceDisturbersMetre / 4.0;
+      y = -gDistanceDisturbersMetre * 1.7320508 / 4.0;
+    } else if (i == 3) {
+      x = 0.0;
+      y = gDistanceDisturbersMetre * 1.7320508 / 4.0;
+    }
+    network_disturber->ConfigureMobility(Vector3D(x, y, 0.0), gDistanceTerminalsMetre);
     gDomains.push_back(network_disturber);
     app.Add(SetApplication(*network_disturber, 5000));
   }
@@ -311,7 +339,7 @@ void Framework::InitSimulation() {
 }
 
 void Framework::Run() {
-  // AnimationInterface anim("netanim/SSMT-anim_" + std::to_string(GetSeed()) + "_" + std::to_string(GetRunNumber()) + ".xml");
+  // AnimationInterface anim("netanim/HiddenWLANs-anim-test.xml");
 
   FlowMonitorHelper flow_monitor;
   Ptr<FlowMonitor> fm = flow_monitor.InstallAll();

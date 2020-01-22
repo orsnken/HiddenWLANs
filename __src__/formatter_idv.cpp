@@ -23,8 +23,8 @@ int run(const std::string& path, int dd, int sr_min, int sr_max, int dlt) {
   using namespace std;
 
   const string prefix = path + "/D" + to_string(dd);
-  const string filename_output_th = prefix + "_throughput.csv";
-  const string filename_output_fi = prefix + "_fairness.csv";
+  const string filename_output_th = prefix + "_throughput_idv.csv";
+  const string filename_output_fi = prefix + "_fairness_idv.csv";
 
   ofstream ofs_th(filename_output_th);
   ofstream ofs_fi(filename_output_fi);
